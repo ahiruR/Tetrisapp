@@ -1,16 +1,16 @@
-# Tomcat 10 を使って Java 17 を動かす設定
+# Tomcat 10（Java 17）を準備
 FROM tomcat:10.1-jdk17-openjdk-slim
 
-# 古いデフォルトページを削除
+# もともと入っている不要なファイルを消す
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 
-# index.jsp などがある場所をコピー（フォルダ名はあなたの構成に合わせて調整）
+# index.jsp などがある場所（src/main/webapp）をコピー
 COPY src/main/webapp /usr/local/tomcat/webapps/ROOT
 
-# コンパイル済みのJavaプログラム(ScoreServletなど)をコピー
+# コンパイルされたプログラム（build/classes）を配置場所にコピー
 COPY build/classes /usr/local/tomcat/webapps/ROOT/WEB-INF/classes
 
-# ライブラリ(Gsonなど)をコピー
+# ライブラリ（src/main/webapp/WEB-INF/lib）を配置場所にコピー
 COPY src/main/webapp/WEB-INF/lib /usr/local/tomcat/webapps/ROOT/WEB-INF/lib
 
 EXPOSE 8080
